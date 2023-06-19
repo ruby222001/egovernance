@@ -1,0 +1,59 @@
+
+.container {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right side */
+}
+
+.search {
+  margin-left: 10px; /* Adds some spacing between the content and search form */
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 10px;
+  }
+  
+  .logo{
+    width: 200px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #ccc;
+    padding: 20px;
+    width: 100px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #2877d9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-link {
+    display: block;
+    text-decoration: solid;
+    color: #2256ae;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #7299d2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: auto;
+}
+  a.add-link:hover {
+    text-decoration: underline;
+  }
+  body {
+    width: 90%; /* Set the overall width of the webpage */
+    margin: 0 auto; /* Center the webpage horizontally */
+    padding: 20px;
+}
+  
+  
+  

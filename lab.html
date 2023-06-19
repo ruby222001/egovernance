@@ -9,27 +9,62 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+  
+      
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <h3>Welcome to NEA Billing System</h3>
-        <form action="search.php" method="GET">
-          <input type="text" name="search_term" id="search_term" />
-          <input type="submit" value="submit" />
-        </form>
-        <form class="form-inline">
-          <button class="btn btn-outline-success" type="button">Login</button>
-          <button class="btn btn-outline-success" type="button">Logout</button>
-        </form>
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="./image/neaLogo.png" alt="Logo of NEA" class="logo" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+         
+          </ul>
+          <form action="search.php" method="GET">
+            <input type="text" name="search_term" id="search_term" />
+            <input type="submit" value="submit" />
+          </form>
+          
+        </div>
+        <div>
+        <button class="btn btn-outline-success" type="button">Login</button>
+        <button class="btn btn-outline-success" type="button">Logout</button>
+      </div>
       </nav><br>
-    <a href="branch.html">Add Branch</a><br>
-    <a href="bill.html">Add Bill</a><br>
-    <a href="customer.html">Add Customer</a><br>
-    <a href="demandrate.html">Add Demand Rate</a><br>
-    <a href="demandtype.html">Add Demand Type</a><br>
-    <a href="payment.html">Add Payment</a><br>
-    <a href="paymentoption.html">Add Payment Option</a><br>
+      <h3 style="text-align: center;"><b>Welcome to NEA Billing System</b></h3>
+      <br><br> <div> 
+    <a href="branch.html" class ="add-link">Add Branch</a><br>
+    <a href="bill.html"class ="add-link">Add Bill</a><br>
+    <a href="customer.html"class ="add-link">Add Customer</a><br>
+    <a href="demandrate.html"class ="add-link">Add Demand Rate</a><br>
+    <a href="demandtype.html"class ="add-link">Add Demand Type</a><br>
+    <a href="payment.html"class ="add-link">Add Payment</a><br>
+    <a href="paymentoption.html"class ="add-link">Add Payment Option</a><br>
     <br>
+  </div> 
+
     <form action="customersearch.php" method="POST">
       
         <b>Customer Details</b><br><br>
@@ -43,12 +78,15 @@
        
       </form>
       <br><br>
-      <form method="POST"  action="billsearch.php">
+      <form method="POST" class="form-inline" action="billsearch.php">
         <label for="BID"><b>Bill DETAILS:</b></label><br>
         Search bill details
         <br>
         <input type="text" placeholder="enter BID" name="BID">
         <br><button type="submit">Search</button>
-    </form>
+        
+     
+ 
+      </form>
 </body>
 </html>
