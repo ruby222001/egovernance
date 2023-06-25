@@ -34,17 +34,34 @@ nav {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+.add-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.nav-item.active {
+  width: 100%;
+}
+
+.nav-item.active a {
+  width: 100%;
+  height: auto;
+}
+
+
 .add-link {
-    display: block;
-    text-decoration: solid;
-    color: #2256ae;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #7299d2;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    margin-left: auto;
+  display: block;
+  text-decoration: none;
+  color: #2256ae;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #7299d2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 700;
+  text-align: center;
+  width: 200px;
 }
   a.add-link:hover {
     text-decoration: underline;
