@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khalti Payment Integration</title>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+</head>
+<body>
+    <h3>Khalti Payment Integration</h3>
+    <div class="formid">
+        <form action="paymentoption.php" method="POST">
+            <label for="pid">PID:</label>
+            <input type="text" name="pid" id="pid" required/><br>
+            <label for="bid">BID:</label>
+            <input type="text" name="bid" id="bid" required/><br>
+            <label for="pdate">Pdate:</label>
+            <input type="date" name="pdate" id="pdate" required/><br>
+            <label for="pamount">PAmount:</label>
+            <input type="number" name="pamount" id="pamount" required/><br>
+            <label for="paymenttypeid">Payment type id:</label>
+            <input type="number" name="paymenttypeid" id="paymenttypeid" required/><br>
+            <label for="rebate">Rebate Amount:</label>
+            <input type="number" name="rebate" id="rebate" required/><br>
+            <label for="fine">Fine Amount:</label>
+            <input type="text" name="fine" id="fine" required/><br>
+            <input type="submit"  value="Submit" />
+        </form>
+    </div>
+
+    <script>
+    function makePayment() {
+            var config = {
+                "publicKey": "test_public_key_f66150ba2f6c4fc7badd7a1ce544983d",
+                "productIdentity": "Payment",
+                "productName": "Payment for Bill",
+                "productUrl": "http://localhost/paymentoption.php",
+                "eventHandler": {
+                    onSuccess(payload) {
+                        // Handle successful payment
+                        console.log(payload);
+                        alert('Payment successful!');
+                    },
+                    onError(error) {
+                        // Handle payment error
+                        console.log(error);
+                        alert('Payment error!');
+                    },
+                    onClose() {
+                        // Handle payment modal close
+                        console.log('Payment modal closed.');
+                    }
+                }
+            };
+
+            var checkout = new KhaltiCheckout(config);
+            var submitBtn = document.getElementById("submitBtn");
+            submitBtn.onclick = function () {
+                // Submit the form
+                document.getElementById("paymentForm").submit();
+
+                // Show the Khalti payment modal
+                checkout.show({ amount: document.getElementById("pamount").value * 100 });
+            };
+        }
+
+        window.onload = function () {
+            makePayment();
+        };
+    </script>
+</body>
+</html>

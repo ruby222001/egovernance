@@ -1,0 +1,11 @@
+{
+    "name": "rubi/neabill",
+    "description": "neabill",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Rubi\\Neabill\\": "src/"
+        }
+    },
+    "require": {"khalti/khalti-sdk": "^2.0"}
+}
