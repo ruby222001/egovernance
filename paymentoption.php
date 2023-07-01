@@ -1,16 +1,4 @@
 <?php
-require_once 'vendor/autoload.php';
-use Khalti\Checkout\Utils\Config;
-use Khalti\Checkout\Utils\TokenGenerator;
-use Khalti\Checkout\Api\Client as KhaltiClient;
-
-$publicKey = 'test_public_key_f66150ba2f6c4fc7badd7a1ce544983d';
-$secretKey = 'test_secret_key_614eec0ede624202b701d4fc638ec86c';
-$token = TokenGenerator::generateUniqueToken();
-
-$config = new Config($publicKey, $secretKey, Config::$BASE_URL_PRODUCTION);
-$khalti = new KhaltiClient($config);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $POID = $_POST["pid"];
     $BID = $_POST["bid"];
@@ -19,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $PaymentTypeID = $_POST["paymenttypeid"];
     $RebateAmt = $_POST["rebate"];
     $FineAmt = $_POST["fine"];
-    
+
     echo "<p>Payment ID: " . $POID . "<br>";
     echo "<p>Bill ID: " . $BID . "<br>";
     echo "<p>Payment Date: " . $Pdate . "<br>";
@@ -29,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<p>Fine Amount: " . $FineAmt . "<br>";
 
     include("dbconnect.php");
-    $query = "INSERT into paymentoption(POID,BID,Pdate,PAmount,Payment_type_ID,Rebate_Amt,Fine_Amt) VALUES('$POID','$BID','$Pdate','$PAmount','$PaymentTypeID','$RebateAmt','$FineAmt');";
+    $query = "INSERT into paymentoption(PID,BID,Pdate,PAmount,Payment_type_ID,Rebate_Amt,Fine_Amt) VALUES('$POID','$BID','$Pdate','$PAmount','$PaymentTypeID','$RebateAmt','$FineAmt');";
     $result = mysqli_query($conn, $query);
     if ($result) {
         echo "Data Inserted Successfully";
@@ -37,5 +25,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "ERROR: " . $query . ":-" . mysqli_error($conn);
     }
     mysqli_close($conn);
+
+    $args = http_build_query(array(
+        'token' => 'CkbGd5B5JFSg6xnP2J4Rem', // Replace with the actual token
+        'amount'  => 1000
+    ));
+
+    $url = "https://khalti.com/api/v2/payment/verify/";
+
+    # Make the call using API.
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    $headers = ['Authorization: Key test_secret_key_614eec0ede624202b701d4fc638ec86c'];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // Response
+    $response = curl_exec($ch);
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($status_code == 200) {
+        echo json_encode(['success' => 1]);
+    } else {
+        echo json_encode(['error' => 1, 'message' => 'Payment Failed']);
+    }
 }
 ?>

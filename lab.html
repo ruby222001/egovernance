@@ -11,6 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+    <script src="https://khalti.com/static/khalti-checkout.js"></script>
 
       
 </head>
@@ -97,5 +98,18 @@
      
  
       </form>
+      <script type="text/javascript">
+    $(function(){
+        // just show the live js here.
+        $.ajax({url: "khalti-client.js", success: function(resp){
+            $("#js-code-here").text(resp.trim());
+            addEventListener('load', function(event) { PR.prettyPrint(); }, false);
+        }, dataType: 'html'});
+        $.get({url: "example.js", success: function(resp){
+            $("#js-example-here").text(resp.trim());
+            addEventListener('load', function(event) { PR.prettyPrint(); }, false);
+        }, dataType: 'html'});
+    });
+</script>
 </body>
 </html>

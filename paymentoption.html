@@ -25,49 +25,70 @@
             <input type="number" name="rebate" id="rebate" required/><br>
             <label for="fine">Fine Amount:</label>
             <input type="text" name="fine" id="fine" required/><br>
-            <input type="submit"  value="Submit" />
-        </form>
+<button id ="payment-button">Pay with Khalti</button>        </form>
     </div>
 
     <script>
-    function makePayment() {
-            var config = {
-                "publicKey": "test_public_key_f66150ba2f6c4fc7badd7a1ce544983d",
-                "productIdentity": "Payment",
-                "productName": "Payment for Bill",
-                "productUrl": "http://localhost/paymentoption.php",
-                "eventHandler": {
-                    onSuccess(payload) {
-                        // Handle successful payment
-                        console.log(payload);
-                        alert('Payment successful!');
-                    },
-                    onError(error) {
-                        // Handle payment error
-                        console.log(error);
-                        alert('Payment error!');
-                    },
-                    onClose() {
-                        // Handle payment modal close
-                        console.log('Payment modal closed.');
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_f66150ba2f6c4fc7badd7a1ce544983d",
+            "productIdentity": "1234567890",
+            "productName": "Dragon",
+            "productUrl": "http://localhost/Nea_bill/neabill/paymentoption.html",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                    if(payload.idx){
+                        $.ajaxSetup({
+                            headers:{
+                                'X-CSRF-TOKEN':'{{csrf_token()}}'
+                            }
+                        });
+                        $.ajax({
+                            method: 'post',
+                            url: "{{route('ajax.khalti.verify_order')}}",
+                            data: payload,
+                            success: function(response){
+                                if(response.success == 1){
+                                    window.location = response.redirecto;
+                                }else{
+                                    checkout.hide();
+
+                                }
+                            },
+                            error: function(data){
+                                console.log('Error:',data);
+                            }
+                        })
+
                     }
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
                 }
-            };
-
-            var checkout = new KhaltiCheckout(config);
-            var submitBtn = document.getElementById("submitBtn");
-            submitBtn.onclick = function () {
-                // Submit the form
-                document.getElementById("paymentForm").submit();
-
-                // Show the Khalti payment modal
-                checkout.show({ amount: document.getElementById("pamount").value * 100 });
-            };
-        }
-
-        window.onload = function () {
-            makePayment();
+            }
         };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({amount: 20000});
+        }
+        
+    </script>
+           
     </script>
 </body>
 </html>
